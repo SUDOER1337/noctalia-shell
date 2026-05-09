@@ -104,8 +104,7 @@ Singleton {
                                             "system": SettingsPanel.Tab.System,
                                             "systemmonitor": SettingsPanel.Tab.System,
                                             "userinterface": SettingsPanel.Tab.UserInterface,
-                                            "wallpaper": SettingsPanel.Tab.Wallpaper,
-                                            "idle": SettingsPanel.Tab.Idle
+                                            "wallpaper": SettingsPanel.Tab.Wallpaper
                                           })
 
   function _parseSettingsTabArg(tabArg) {

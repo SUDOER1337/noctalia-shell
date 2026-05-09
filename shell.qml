@@ -124,7 +124,7 @@ ShellRoot {
           }
         });
 
-        delayedInitTimer.restart();
+        delayedInitTimer.running = true;
       }
 
       Overview {}

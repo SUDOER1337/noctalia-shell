@@ -182,13 +182,6 @@ in
   };
 
   config = lib.mkIf cfg.enable {
-    warnings = lib.mkIf cfg.systemd.enable [
-      ''
-        Running noctalia-shell as a systemd service has been deprecated!
-        See https://docs.noctalia.dev/getting-started/nixos/#running-the-shell for details.
-      ''
-    ];
-
     systemd.user.services.noctalia-shell = lib.mkIf cfg.systemd.enable {
       Unit = {
         Description = "Noctalia Shell - Wayland desktop shell";

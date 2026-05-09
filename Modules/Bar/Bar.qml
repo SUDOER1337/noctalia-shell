@@ -412,10 +412,7 @@ Item {
         MouseArea {
           anchors.fill: parent
           acceptedButtons: Qt.RightButton | Qt.MiddleButton
-          // Keep enabled even when actions are "none" so we still swallow right/middle on
-          // empty bar gaps. Otherwise Qt Quick's context-menu path can crash on Wayland
-          // (QQuickDeliveryAgentPrivate::contextMenuTargets / mapToScene).
-          enabled: true
+          enabled: bar.barRightClickAction !== "none" || Settings.data.bar.middleClickAction !== "none"
           hoverEnabled: false
           preventStealing: true
           onClicked: mouse => {
@@ -423,14 +420,12 @@ Item {
                          if (bar.isPointOverWidget(mouse.x, mouse.y))
                          return;
                          bar.handleEmptyBarClick(bar.barRightClickAction, Settings.data.bar.rightClickFollowMouse, Settings.data.bar.rightClickCommand, mouse);
-                         mouse.accepted = true;
                          return;
                        }
                        if (mouse.button === Qt.MiddleButton) {
                          if (bar.isPointOverWidget(mouse.x, mouse.y))
                          return;
                          bar.handleEmptyBarClick(Settings.data.bar.middleClickAction || "none", Settings.data.bar.middleClickFollowMouse, Settings.data.bar.middleClickCommand, mouse);
-                         mouse.accepted = true;
                          return;
                        }
                      }
@@ -523,14 +518,7 @@ Item {
         height: Style.marginS
         x: 0
         y: 0
-        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-        onClicked: function (mouse) {
-          if (mouse.button !== Qt.LeftButton) {
-            mouse.accepted = true;
-            return;
-          }
-          root.triggerFirstWidgetInSection("left");
-        }
+        onClicked: root.triggerFirstWidgetInSection("left")
       }
 
       // Bottom edge hot corner - triggers last widget in right (bottom) section
@@ -539,14 +527,7 @@ Item {
         height: Style.marginS
         x: 0
         anchors.bottom: parent.bottom
-        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-        onClicked: function (mouse) {
-          if (mouse.button !== Qt.LeftButton) {
-            mouse.accepted = true;
-            return;
-          }
-          root.triggerLastWidgetInSection("right");
-        }
+        onClicked: root.triggerLastWidgetInSection("right")
       }
 
       // Calculate margin to center widgets vertically within the bar height
@@ -644,14 +625,7 @@ Item {
         height: parent.height
         x: 0
         y: 0
-        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-        onClicked: function (mouse) {
-          if (mouse.button !== Qt.LeftButton) {
-            mouse.accepted = true;
-            return;
-          }
-          root.triggerFirstWidgetInSection("left");
-        }
+        onClicked: root.triggerFirstWidgetInSection("left")
       }
 
       // Right edge hot corner - triggers last widget in right section
@@ -660,14 +634,7 @@ Item {
         height: parent.height
         anchors.right: parent.right
         y: 0
-        acceptedButtons: Qt.LeftButton | Qt.RightButton | Qt.MiddleButton
-        onClicked: function (mouse) {
-          if (mouse.button !== Qt.LeftButton) {
-            mouse.accepted = true;
-            return;
-          }
-          root.triggerLastWidgetInSection("right");
-        }
+        onClicked: root.triggerLastWidgetInSection("right")
       }
 
       // Calculate margin to center widgets horizontally within the bar height
